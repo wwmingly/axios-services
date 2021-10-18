@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <el-button>默认按钮</el-button>
-    <el-button type="primary">主要按钮</el-button>
-    <el-button type="success">成功按钮</el-button>
-    <el-button type="info">信息按钮</el-button>
-    <el-button type="warning">警告按钮</el-button>
-    <el-button type="danger">危险按钮</el-button>
+    <el-button @click="handleClick(false)">请求时，不出现loading</el-button>
+    <el-button type="primary" @click="handleClick(true)"
+      >请求时，出现loading</el-button
+    >
 
-    <img @click="handle" alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>{{ movieInfo.originalName }}</h1>
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
   </div>
 </template>
 
@@ -22,6 +20,11 @@ export default {
   components: {
     HelloWorld
   },
+  data() {
+    return {
+      movieInfo: {}
+    };
+  },
   computed: {
     add() {
       // return throttle(() => {
@@ -32,21 +35,20 @@ export default {
     }
   },
   mounted() {
-    Api.MovieServer.queryList({
-      data: {
-        type: "movie",
-        tag: "热门",
-        page_limit: 50,
-        page_start: 0
-        // ?type=movie&tag=%E7%83%AD%E9%97%A8&page_limit=50&page_start=0
-      }
-      // loading: true
-      // success: true
-    }).then(res => {
-      console.log("拿到一定是正确的数据", res);
-    });
+    this.handleClick(true);
   },
   methods: {
+    handleClick(loading) {
+      Api.MovieServer.queryList({
+        data: {
+          id: "1302425"
+        },
+        loading
+      }).then(res => {
+        console.log("isResponse=false时，拿到一定是正确的数据", res);
+        this.movieInfo = res;
+      });
+    },
     handle() {
       this.add();
     },

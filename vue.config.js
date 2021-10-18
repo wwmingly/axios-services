@@ -8,7 +8,7 @@ function resolve(dir) {
 
 const name = "vvmily"; // page title
 // const baseUrl = "http://10.150.134.130:8081";
-const baseUrl = "https://movie.douban.com";
+const baseUrl = "https://movie.querydata.org";
 
 const port = 8085; // dev port
 
@@ -36,14 +36,14 @@ module.exports = {
           // '^/system': '/',
         }
       },
-      "/j": {
+      "/api": {
         // 权限
         target: baseUrl, // 后台接口域名
         // ws: true,        //如果要代理 websockets，配置这个参数
         secure: true, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 是否跨域
         pathRewrite: {
-          // "^/j": ""
+          // "^/api": ""
         }
       }
     }
